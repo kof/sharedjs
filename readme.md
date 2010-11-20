@@ -1,6 +1,8 @@
 ## Idea of this project
 
-Provide a bunch of most needed high level javascript utility functions, which will work in every browser and in nodejs. The Goal is to make coding of shared code easier.
+Provide a bunch of most needed high level javascript utility functions, which will work in every browser and in nodejs. 
+The Goal is to make writing shared code easier. 
+The dream is to be also dependency N1 for all node modules, to avoid that every module implements its own "each", "extend" etc. methods.   
 
 ## Features
 
