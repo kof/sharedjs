@@ -12,5 +12,5 @@ Provide a bunch of most needed high level javascript utility functions, which wi
 - community driven
 - intelligent build tool (include only what you need)
 - don't reinvent the wheel, if there are a libs we could use - do it
-- every function is as standalone as possible, to reduce dependencies
+- every function is as standalone as possible, to reduce dependencies (only if code overhead is minimal)
 - no performance overhead for the server because of client support
