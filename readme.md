@@ -1,6 +1,6 @@
 ## Idea of this project
 
-Provide a bunch of most needed high level javascript utility functions, which will work in every browser and in nodejs.
+Provide a bunch of most needed high level javascript utility functions, which will work in every browser and in nodejs. The Goal is to make coding of shared code easier.
 
 ## Features
 
