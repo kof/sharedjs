@@ -55,7 +55,6 @@ function test( data, expectedIterations, type ) {
         
 }
 
-
 test("12", 2, "string");
 
 test([1,2], 2, "true array");
@@ -73,6 +72,12 @@ test(null, 0, "null");
 test(undefined, 0, "undefined");
 
 test( new Buffer(2), 2, "buffer" );
+(function(){
+    function noop() {};
+    noop[0] = 1;
+    noop[1] = 2;
+    test( noop, 2, "function" )
+}())
 
 
 require( "util" ).print( "Method 'each' tested successfull\n" );

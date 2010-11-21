@@ -1,5 +1,5 @@
 /**
- * Iterate through an array or object
+ * Iterate through an array, object, string, buffer, function object
  * @param {Mixed} obj
  * @param {Function} fn
  * @param {Object} context optional
@@ -9,6 +9,7 @@ exports.each = (function() {
     
     var toString = Object.prototype.toString,
         tobj = "[object Object]",
+        tfn = "[object Function]",
         TypeError = global.TypeError || function TypeError(){}; 
 
     // not using ecma5 forEach, because there is no way to exit the loop
@@ -22,15 +23,15 @@ exports.each = (function() {
     
     // use ecma5 if possible
     if ( Object.keys && Array.prototype.forEach ) {
-        function objEach( fn, context ) {
-            Object.keys( this ).forEach( function(val, key, obj ) {
+        function objEach( obj, fn, context ) {
+            Object.keys( obj ).forEach( function(val, key, obj ) {
                 return fn.call( context, val, key, obj );
             });    
         }
     } else {
-        function objEach( fn, context ) {
-            for ( var key in this ) {
-                if ( fn.call( context, this[key], key, this ) === false ) {
+        function objEach( obj, fn, context ) {
+            for ( var key in obj ) {
+                if ( fn.call( context, obj[key], key, obj ) === false ) {
                     return false;
                 }            
             }        
@@ -54,8 +55,8 @@ exports.each = (function() {
         
         context = context || global;
         
-        if ( objType === tobj ) {
-            return objEach.call( obj, fn, context );        
+        if ( objType === tobj || objType === tfn ) {
+            return objEach( obj, fn, context );        
         } else {
             return arrEach( obj, fn, context );
         }
