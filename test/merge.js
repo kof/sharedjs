@@ -15,4 +15,7 @@ a.deepEqual(  $.merge({test1: 1}, {test2: 2}, {test3: 3}), {test1: 1, test2: 2, 
 }());
 
 
+a.deepEqual(  $.merge( true, {test1: {test1: 1}}, {test1: {test2: 2} } ), { test1: {test1: 1, test2: 2} }, "deep merge" );
+
+
 require( "util" ).print( "Method 'merge' tested successfull\n" );
