@@ -5,14 +5,16 @@ var fs = require( "fs" ),
     root = path.normalize( __dirname + "/.." ); 
 
 
-var intro = "(function( exports, global, undefined ) { if ( !exports ) { global = this; exports = global.$ = {}; }",
-    outro = "}( exports, global ));";
+var intro = fs.readFileSync( root + "/src/intro.js" ) + "\n",
+    outro = fs.readFileSync( root + "/src/outro.js" );
 
 
 // create full build
 var data = intro;
 fs.readdirSync( root + "/src" ).forEach( function( file ) {
-    data += fs.readFileSync( root + "/src/" + file ) + "\n";
+    if ( file !== "intro.js" && file !== "outro.js" ) {
+        data += fs.readFileSync( root + "/src/" + file ) + "\n";
+    }
 });
 data += outro;
 fs.writeFileSync( root + "/lib/shared.js", data, "utf-8" );
