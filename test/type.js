@@ -1,4 +1,4 @@
-var $ = require( "../lib/shared.js" ),
+var $ = require( "../src/type.js" ),
     a = require( "assert" ),
     undefined;
 

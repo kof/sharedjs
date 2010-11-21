@@ -6,8 +6,8 @@
  */
 exports.type = (function() {
     var i,
-        String = String,
-        toString = Object.prototype.toString,
+        String = global.String,
+        toString = global.Object.prototype.toString,
         types = [ "Boolean", "Number", "String", "Function", "Array", "Date", "RegExp", "Object", "Buffer" ],
         class2type = {};
         
