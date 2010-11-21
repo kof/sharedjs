@@ -1,7 +1,3 @@
-var $ = require( "../src/bind.js" ),
-    a = require( "assert" ),
-    undefined;
-
 a.equal( typeof $.bind( function(){ return 123 } ), "function", "return value of bind" );
 a.equal( $.bind( function(){ return 123; } )(), 123, "return value of the bound function" );
 a.equal( $.bind( function(){ return this.test; }, {test: 123} )(), 123, "check bound function context" );

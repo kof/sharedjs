@@ -1,7 +1,3 @@
-var $ = require( "../src/type.js" ),
-    a = require( "assert" ),
-    undefined;
-
 a.ok( $.type( undefined, "undefined" ), "undefined works" );
 a.ok( $.type( true, "boolean" ), "boolean works" );
 a.ok( $.type( false, "boolean" ), "boolean works" );

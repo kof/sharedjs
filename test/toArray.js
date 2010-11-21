@@ -1,7 +1,3 @@
-var $ = require( "../src/toArray.js" ),
-    a = require( "assert" ),
-    undefined;
-
 a.deepEqual( $.toArray([1,2,3]), [1,2,3], "true array" );
 a.deepEqual( $.toArray([1,2,3], 1, 2), [2], "true array sliced" );
 a.deepEqual( $.toArray( {test:123} ), [ { test: 123 } ], "object" );

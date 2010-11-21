@@ -1,7 +1,3 @@
-var $ = require( "../src/trim.js" ),
-    a = require( "assert" ),
-    undefined;
-
 a.equal( $.trim(" My String"), "My String", "case 1" );
 a.equal( $.trim("My String "), "My String", "case 2" );
 a.equal( $.trim(" My String "), "My String", "case 3");

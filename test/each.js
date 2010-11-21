@@ -1,15 +1,10 @@
-var $ = require( "../src/each.js" ),
-    a = require( "assert" ),
-    undefined;
-
 function test( data, expectedIterations, type ) {
     (function(){
         var iteration = 0;
         
-        $.each(data, function( val, i, arr ) {
-            a.equal( val, data[iteration], "value is correct, data is " + type );
-            a.equal( i, iteration, "iteration is correct, data is " + type );
-            a.strictEqual( arr , data, "array is correct, data is " + type );
+        $.each(data, function( val, i, _data ) {
+            a.equal( val, data[i], "value is correct, data is " + type );
+            a.strictEqual( _data , data, "array is correct, data is " + type );
             ++iteration;    
         });
         a.equal(iteration, expectedIterations, "iterations count is correct, data is " + type);
@@ -55,14 +50,16 @@ function test( data, expectedIterations, type ) {
         
 }
 
-test("12", 2, "string");
-
-test([1,2], 2, "true array");
-
 test({
     0: 1,
     1: 2
 }, 2, "object");
+
+test("12", 2, "string");
+
+test([1,2], 2, "true array");
+
+
 
 (function(){
     test(arguments, 2, "collection");
@@ -72,6 +69,7 @@ test(null, 0, "null");
 test(undefined, 0, "undefined");
 
 test( new Buffer(2), 2, "buffer" );
+
 (function(){
     function noop() {};
     noop[0] = 1;
