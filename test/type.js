@@ -1,8 +1,7 @@
-var $ = require( "../lib/common.js" ),
+var $ = require( "../lib/shared.js" ),
     a = require( "assert" ),
     undefined;
 
-// test type method
 a.ok( $.type( undefined, "undefined" ), "undefined works" );
 a.ok( $.type( true, "boolean" ), "boolean works" );
 a.ok( $.type( false, "boolean" ), "boolean works" );

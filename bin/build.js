@@ -15,6 +15,6 @@ fs.readdirSync( root + "/src" ).forEach( function( file ) {
     data += fs.readFileSync( root + "/src/" + file ) + "\n";
 });
 data += outro;
-fs.writeFileSync( root + "/lib/common.js", data, "utf-8" );
+fs.writeFileSync( root + "/lib/shared.js", data, "utf-8" );
     
 
