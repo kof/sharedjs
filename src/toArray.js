@@ -1,6 +1,8 @@
 /**
  * Convert a collection or any other type to an Array
  * @param {Mixed} obj
+ * @param {Number} beginIndex optional
+ * @param {Number} endIndex optional
  * @return {Array}
  */
 exports.toArray = (function() {
@@ -13,14 +15,15 @@ exports.toArray = (function() {
         // V8 returns by arguments
         args = "[object Arguments]" ;
     
-    return function( obj, startIndex ) {
+    return function( obj, beginIndex, endIndex ) {
         var type = toString.call( obj );
         // this is a true array
         if ( type === arr ) {
-            return startIndex > 0 ? slice.call( obj, startIndex ) : obj;
+            // startIndex could be also negative
+            return beginIndex != null || endIndex != null ? slice.call( obj, beginIndex, endIndex ) : obj;
         // its collection    
         } else if ( obj.length && ( type === object || type === args ) ) {
-            return slice.call( obj, startIndex );
+            return slice.call( obj, beginIndex, endIndex );
         // any other type
         } else {
             var ret = [];

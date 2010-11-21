@@ -3,7 +3,7 @@ var $ = require( "../src/toArray.js" ),
     undefined;
 
 a.deepEqual( $.toArray([1,2,3]), [1,2,3], "true array" );
-a.deepEqual( $.toArray([1,2,3], 1), [2,3], "true array sliced" );
+a.deepEqual( $.toArray([1,2,3], 1, 2), [2], "true array sliced" );
 a.deepEqual( $.toArray( {test:123} ), [ { test: 123 } ], "object" );
 a.deepEqual( $.toArray( "test" ), [ "test" ], "string" );
 a.deepEqual( $.toArray( 123 ), [ 123 ], "number" );
@@ -15,8 +15,8 @@ a.deepEqual( $.toArray( date ), [ date ], "date" );
 }(123));
 
 (function(){
-    a.deepEqual( $.toArray( arguments, 1 ), [ 456 ], "sliced collection" );
-}(123, 456));
+    a.deepEqual( $.toArray( arguments, 1, 2 ), [ 2 ], "sliced collection" );
+}(1, 2, 3));
 
 
 require( "util" ).print( "Method 'toArray' tested successfull\n" );
