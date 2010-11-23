@@ -22,7 +22,7 @@ exports.toArray = (function() {
             // startIndex could be also negative
             return beginIndex != null || endIndex != null ? slice.call( obj, beginIndex, endIndex ) : obj;
         // its collection    
-        } else if ( obj.length && ( type === object || type === args ) ) {
+        } else if ( obj.length != null && ( type === object || type === args ) ) {
             return slice.call( obj, beginIndex, endIndex );
         // any other type
         } else {

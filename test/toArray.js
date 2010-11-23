@@ -14,5 +14,8 @@ a.deepEqual( $.toArray( date ), [ date ], "date" );
     a.deepEqual( $.toArray( arguments, 1, 2 ), [ 2 ], "sliced collection" );
 }(1, 2, 3));
 
+(function(){
+    a.deepEqual( $.toArray( arguments ), [], "empty collection" );
+}());
 
 require( "util" ).print( "Method 'toArray' tested successfull\n" );
