@@ -3,7 +3,7 @@
 var fs = require( "fs" ),
     path = require( "path" ),
     root = path.normalize( __dirname + "/.." ),
-    args = require( root + "/deps/argsparser/lib/argsparser" ).parse(); 
+    args = require( root + "/deps/argsparser" ).parse(); 
 
 
 var intro = fs.readFileSync( root + "/src/intro.js" ) + "\n",
@@ -15,12 +15,16 @@ var custom = args["-c"];
 var name = "shared"; 
 
 if ( custom ) {
-    name = args["-n"] || "custom";    
+    name = args["-n"] || "custom";
+    if ( typeof custom === "string" ) {
+        custom = [custom];
+    }   
 }
 
 var data = intro;
 
 if ( custom ) {
+    
     custom.forEach( function( name ) {
         data += fs.readFileSync( root + "/src/" + name + ".js" ) + "\n";
     });    
@@ -39,8 +43,6 @@ if ( custom ) {
 data += outro;
 fs.writeFileSync( root + "/lib/" + name + ".js", data, "utf-8" );
 
-
-
 // create minified version
 var jsp = require( root + "/deps/UglifyJS/lib/parse-js" ),
     jspro = require( root + "/deps/UglifyJS/lib/process" ),
@@ -52,5 +54,4 @@ var jsp = require( root + "/deps/UglifyJS/lib/parse-js" ),
 fs.writeFileSync( root + "/lib/" + name + ".min.js", minData, "utf-8" );
 
     
-require( "util" ).print( "Build created successfull\n" );    
-
+require( "util" ).print( "Build created successfull\n" );
