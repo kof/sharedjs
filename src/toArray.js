@@ -13,7 +13,7 @@ exports.toArray = (function() {
         arr = "[object Array]",
         object = "[object Object]",
         // V8 returns by arguments
-        args = "[object Arguments]" ;
+        args = "[object Arguments]";
     
     return function( obj, beginIndex, endIndex ) {
         var type = toString.call( obj );
@@ -26,9 +26,7 @@ exports.toArray = (function() {
             return slice.call( obj, beginIndex, endIndex );
         // any other type
         } else {
-            var ret = [];
-            push.call( ret, obj );
-            return ret;    
+            return [obj];
         }
     };
 }());

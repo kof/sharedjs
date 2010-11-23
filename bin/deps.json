@@ -1,4 +1,5 @@
 {
     "each": ["type"],
-    "merge": ["each"]    
+    "merge": ["each"],
+    "toArray": ["type"]    
 }
