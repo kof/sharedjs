@@ -4,7 +4,7 @@
  * @param {Object}  obj
  * @return {Object}
  */
-exports.merge = function merge( deep /*, obj1, obj2, obj3 */) {
+exports.merge = function merge( deep /*, obj1, obj2, obj3 */ ) {
     // take first argument, if its not a boolean
     var args = arguments,
         i = deep === true ? 1 : 0,

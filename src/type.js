@@ -1,5 +1,5 @@
 /**
- * Type detection is inspired by jQuery
+ * Type detection (inspired by jQuery)
  * @param {Object} obj
  * @param {String} expType
  * @return {String|Boolean}

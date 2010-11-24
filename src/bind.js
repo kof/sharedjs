@@ -16,5 +16,5 @@ exports.bind = (function() {
     
     return function( fn, context /*, arg1, arg2, arg3 */ ) {
         return bind.apply( fn, slice.call( arguments, 1 ) );
-    }        
+    };        
 }());
