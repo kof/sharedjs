@@ -10,7 +10,7 @@ exports.bind = (function() {
         bind = Function.prototype.bind || function( context ) {
             var fn = this;
             return function() {
-                return fn.apply( context || {}, arguments );        
+                return fn.apply( context, arguments );        
             };
         };
     
