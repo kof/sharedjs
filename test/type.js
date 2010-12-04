@@ -14,6 +14,5 @@ a.ok( $.type( new Array, "array" ), "array works" );
 a.ok( $.type( /$/i, "regexp" ), "regexp works" );
 a.ok( $.type( new RegExp, "regexp" ), "regexp works" );
 a.ok( $.type( new Date, "date" ), "date works" );
-a.ok( $.type( new Buffer(1), "buffer" ), "buffer works" );
 
 require( "util" ).print( "Method 'type' tested successfull\n" );

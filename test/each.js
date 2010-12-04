@@ -1,17 +1,5 @@
 function test( data, expectedIterations, type ) {
     (function(){
-        var iteration = 0;
-        
-        $.each(data, function( val, i, _data ) {
-            a.equal( val, data[i], "value is correct, data is " + type );
-            a.strictEqual( _data , data, "array is correct, data is " + type );
-            ++iteration;    
-        });
-        a.equal(iteration, expectedIterations, "iterations count is correct, data is " + type);
-        
-    }());
-    
-    (function(){
         var obj = {
             test: function( item, i, arr ) {
                 a.strictEqual( this , exports ? global : window, "callback default context, data is " + type );
