@@ -2,14 +2,20 @@
 
 var fs = require( "fs" ),
     path = require( "path" ),
-    root = path.normalize( __dirname + "/.." ); 
+    root = path.normalize( __dirname + "/.." ),
+    file = process.argv[2]; 
 
-global.$ = require( root + "/lib/shared" );
 global.a = require( "assert" );
 
-fs.readdirSync( root + "/test" ).forEach( function( file ) {
-    file = file.replace( /\.js$/, "" );
+if ( file ) {
+    global.$ = require( root + "/src/" + file );
     require( root + "/test/" + file );
-});
+} else {
+    global.$ = require( root + "/lib/shared" );
+    fs.readdirSync( root + "/test" ).forEach( function( file ) {
+        file = file.replace( /\.js$/, "" );
+        require( root + "/test/" + file );
+    });
+}
 
 
