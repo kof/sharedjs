@@ -2,20 +2,24 @@
 
 var fs = require( "fs" ),
     path = require( "path" ),
+    testrunner = require( "qunit" ),
     root = path.normalize( __dirname + "/.." ),
-    file = process.argv[2]; 
+    method = process.argv[2],
+    tests; 
 
-global.a = require( "assert" );
 
-if ( file ) {
-    global.$ = require( root + "/src/" + file );
-    require( root + "/test/" + file );
+// load only one specific test
+if ( method ) {
+    tests = root + "/test/" + method + ".js";
+// load all tests
 } else {
-    global.$ = require( root + "/lib/shared" );
-    fs.readdirSync( root + "/test" ).forEach( function( file ) {
-        file = file.replace( /\.js$/, "" );
-        require( root + "/test/" + file );
+    tests = [];
+    fs.readdirSync( root + "/test" ).forEach( function( test ) {
+        tests.push(  root + "/test/" + test );
     });
 }
 
-
+testrunner.run({
+    code: root + "/lib/shared.js",
+    tests: tests 
+});

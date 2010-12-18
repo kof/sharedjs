@@ -1,69 +1,60 @@
-function test( data, expectedIterations, type ) {
-    (function(){
+QUnit.module("each");
+
+function run( data, expectedIterations, type ) {
+    test("default context " + type, expectedIterations, function() {
         var obj = {
             test: function( item, i, arr ) {
-                a.strictEqual( this , exports ? global : window, "callback default context, data is " + type );
+                strictEqual( this , exports ? global : window, "callback default context, data is " + type );
             }
         };
         
-        $.each(data, obj.test );
-    }());
+        each(data, obj.test );
+    });
     
+    test("return" + type, 1, function() {
+        equal( each(data, function(){return "123";}), undefined, "return value of each, data is " + type );
+    })
     
-    a.equal( $.each(data, function(){return "123";}), undefined, "return value of each, data is " + type );
-    
-    (function(){
-        // no need to check return false if data is null or undefined
-        if ( data == null ) {
-            return;    
-        }
-        
+    data && test("loops count" + type, 1, function() {
         var i = 0;    
         
-        $.each( data, function(){
+        each( data, function(){
             ++i;
             return false;
         });
         
-        a.equal( i, 1, "exit with return false, data is " + type );
-        
-    }());
-    
-    (function(){
+        equal( i, 1, "exit with return false, data is " + type );
+    });
+
+    test("context option" + type, expectedIterations, function() {
         var context = {test: true};
-        $.each( data, function( item, i, arr ) {
-            a.strictEqual( this , context, "context option, data is " + type );
+        each( data, function( item, i, arr ) {
+            strictEqual( this , context, "context option, data is " + type );
         }, context);
-    }());
-        
+    });
 }
 
-test({
+run({
     0: 1,
     1: 2
 }, 2, "object");
 
-test("12", 2, "string");
+run("12", 2, "string");
 
-test([1,2], 2, "true array");
+run([1,2], 2, "true array");
 
 
 
 (function(){
-    test(arguments, 2, "collection");
+    run(arguments, 2, "collection");
 }(1,2))
 
-test(null, 0, "null");
-test(undefined, 0, "undefined");
-
-test( new Buffer(2), 2, "buffer" );
+run(null, 0, "null");
+run(undefined, 0, "undefined");
 
 (function(){
     function noop() {};
     noop[0] = 1;
     noop[1] = 2;
-    test( noop, 2, "function" )
+    run( noop, 2, "function" )
 }())
-
-
-require( "util" ).print( "Method 'each' tested successfull\n" );

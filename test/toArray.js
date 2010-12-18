@@ -1,21 +1,28 @@
-a.deepEqual( $.toArray([1,2,3]), [1,2,3], "true array" );
-a.deepEqual( $.toArray([1,2,3], 1, 2), [2], "true array sliced" );
-a.deepEqual( $.toArray( {test:123} ), [ { test: 123 } ], "object" );
-a.deepEqual( $.toArray( "test" ), [ "test" ], "string" );
-a.deepEqual( $.toArray( 123 ), [ 123 ], "number" );
-a.deepEqual( $.toArray( true ), [ true ], "boolean" );
-var date = new Date();
-a.deepEqual( $.toArray( date ), [ date ], "date" );
-(function(){
-    a.deepEqual( $.toArray( arguments ), [ 123 ], "collection" );
-}(123));
+QUnit.module("toArray");
+test("main", function() {
+    deepEqual( toArray([1,2,3]), [1,2,3], "true array" );
+    deepEqual( toArray([1,2,3], 1, 2), [2], "true array sliced" );
+    deepEqual( toArray( {test:123} ), [ { test: 123 } ], "object" );
+    deepEqual( toArray( "test" ), [ "test" ], "string" );
+    deepEqual( toArray( 123 ), [ 123 ], "number" );
+    deepEqual( toArray( true ), [ true ], "boolean" );
+});
 
-(function(){
-    a.deepEqual( $.toArray( arguments, 1, 2 ), [ 2 ], "sliced collection" );
-}(1, 2, 3));
+test("date", function() {
+    var date = new Date();
+    deepEqual( toArray( date ), [ date ], "date" );
+});
 
-(function(){
-    a.deepEqual( $.toArray( arguments ), [], "empty collection" );
-}());
-
-require( "util" ).print( "Method 'toArray' tested successfull\n" );
+test("arguments", function() {
+    (function(){
+        deepEqual( toArray( arguments ), [ 123 ], "collection" );
+    }(123));
+    
+    (function(){
+        deepEqual( toArray( arguments, 1, 2 ), [ 2 ], "sliced collection" );
+    }(1, 2, 3));    
+    
+    (function(){
+        deepEqual( toArray( arguments ), [], "empty collection" );
+    }());    
+});

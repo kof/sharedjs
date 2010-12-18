@@ -1,18 +1,19 @@
-a.ok( $.type( undefined, "undefined" ), "undefined works" );
-a.ok( $.type( true, "boolean" ), "boolean works" );
-a.ok( $.type( false, "boolean" ), "boolean works" );
-a.ok( $.type( new Boolean, "boolean" ), "boolean works" );
-a.ok( $.type( null, "null" ), "null works" );
-a.ok( $.type( "test test", "string" ), "string works" );
-a.ok( $.type( new String, "string" ), "string works" );
-a.ok( $.type( 12345, "number" ), "number works" );
-a.ok( $.type( new Number, "number" ), "number works" );
-a.ok( $.type( {}, "object" ), "object works" );
-a.ok( $.type( new Object, "object" ), "object works" );
-a.ok( $.type( [], "array" ), "array works" );
-a.ok( $.type( new Array, "array" ), "array works" );
-a.ok( $.type( /$/i, "regexp" ), "regexp works" );
-a.ok( $.type( new RegExp, "regexp" ), "regexp works" );
-a.ok( $.type( new Date, "date" ), "date works" );
-
-require( "util" ).print( "Method 'type' tested successfull\n" );
+QUnit.module("type");
+test("main", function() {
+    ok( type( undefined, "undefined" ), "undefined works" );
+    ok( type( true, "boolean" ), "boolean works" );
+    ok( type( false, "boolean" ), "boolean works" );
+    ok( type( new Boolean, "boolean" ), "boolean works" );
+    ok( type( null, "null" ), "null works" );
+    ok( type( "test test", "string" ), "string works" );
+    ok( type( new String, "string" ), "string works" );
+    ok( type( 12345, "number" ), "number works" );
+    ok( type( new Number, "number" ), "number works" );
+    ok( type( {}, "object" ), "object works" );
+    ok( type( new Object, "object" ), "object works" );
+    ok( type( [], "array" ), "array works" );
+    ok( type( new Array, "array" ), "array works" );
+    ok( type( /$/i, "regexp" ), "regexp works" );
+    ok( type( new RegExp, "regexp" ), "regexp works" );
+    ok( type( new Date, "date" ), "date works" );    
+});
