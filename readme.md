@@ -19,20 +19,17 @@ The dream is to be also dependency N1 for all node modules, to avoid that every 
 
 ## Installation
 - npm
+
 	$ npm install sharedjs
+	
 - git
+
 	$ git clone https://github.com/kof/sharedjs.git
 	$ git submodule update --init
 
 ## API
 
 	var $ = require("sharedjs");
-
-### $.bind(block, [context], [arg1], [arg2], [argN]);
-
-Creates a new function that, when called, itself calls this function in the context of the provided this value, with a given sequence of arguments preceding any provided when the new function was called.
-
-https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
 
 ### $.each(data, callback, [context]);
 
@@ -44,10 +41,6 @@ Similar ecma 5 concepts are:
 - Array.prototype.some https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/some
 - Array.prototype.every https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/every
 
-### $.inherits(constructor, superConstructor);
-
-Inherit the prototype methods from one constructor into another. This concept is used in nodejs "util" module and googles closure library.
-
 ### $.extend([deep], target, object1, [objectN]);
 
 Merge the contents of two or more objects together into the first object. 
@@ -58,5 +51,13 @@ Merge the contents of two or more objects together into the first object.
 `objectN` Additional objects containing properties to merge in.
 
 	var object = $.extend({}, object1, object2);
+	
+### $.bind(block, [context], [arg1], [arg2], [argN]);
 
+Creates a new function that, when called, itself calls this function in the context of the provided this value, with a given sequence of arguments preceding any provided when the new function was called.
 
+https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+
+### $.inherits(constructor, superConstructor);
+
+Inherit the prototype methods from one constructor into another. This concept is used in nodejs "util" module and googles closure library.
