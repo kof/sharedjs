@@ -36,7 +36,7 @@ The dream is to be also dependency N1 for all node modules, to avoid that every 
 Iterates over array, object or string, calls callback function once per data element.
 Quit the loop using "return false;" inside of callback.
 
-Similar ecma 5 concepts are:
+#### Similar ecma 5 concepts are:
 - Array.prototype.forEach https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/forEach
 - Array.prototype.some https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/some
 - Array.prototype.every https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/every
@@ -45,10 +45,10 @@ Similar ecma 5 concepts are:
 
 Merge the contents of two or more objects together into the first object. 
 
-`deep` If true, the merge becomes recursive.
-`target` The object to extend. It will receive the new properties.
-`object1` An object containing additional properties to merge in.
-`objectN` Additional objects containing properties to merge in.
+- `deep` If true, the merge becomes recursive.
+- `target` The object to extend. It will receive the new properties.
+- `object1` An object containing additional properties to merge in.
+- `objectN` Additional objects containing properties to merge in.
 
 	var object = $.extend({}, object1, object2);
 	
