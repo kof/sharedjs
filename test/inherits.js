@@ -1,3 +1,5 @@
+(function(){
+    
 QUnit.module("inherits");
 
 function Human(){}
@@ -14,3 +16,4 @@ test("main", function(){
     notEqual( Me.prototype, Human.prototype, "both has different prototypes" );
 });
 
+}());

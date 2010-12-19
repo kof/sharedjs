@@ -143,4 +143,4 @@ test("creditcard", function() {
 
 
 
-})();
+}());

@@ -12,7 +12,10 @@ exports.inherits(ValidationError, Error);
 ValidationError.prototype.toString = function() {
     return this.name + ": " + this.message;    
 };
-    
+
+function fail( name, message ) {
+    return new ValidationError( name, message );    
+}    
 
 /**
  * Validate one variable. 
@@ -29,11 +32,11 @@ function validateOne( data, schema, name ) {
     if ( schemaType === "string" ) {
         schema = {type: schema};
     } else if ( schemaType !== "object" && schemaType !== "function" ) {
-        throw new ValidationError( "BAD_SCHEMA", "bad schema" + name );   
+        throw fail( "BAD_SCHEMA", "bad schema" + name );   
     }
     
     if ( schemaType === "function" ) {
-        return schema(data) === false ? new ValidationError( "CUSTOM_VALIDATION", "custom validation fail" + name ) : true;
+        return schema(data) === false ? fail( "CUSTOM_VALIDATION", "custom validation fail" + name ) : true;
     }     
     
     // check type
@@ -41,36 +44,36 @@ function validateOne( data, schema, name ) {
         dataType = exports.type( data );
         // handle simple type string and regexp string e.g. "string|function"
         if ( schema.type !== dataType && !(new RegExp(schema.type)).test(dataType)) {
-            return new ValidationError( "TYPE", "Found " + dataType + ", but expected " + schema.type + name );
+            return fail( "TYPE", "Found " + dataType + ", but expected " + schema.type + name );
         }   
     }
     
     // min and max
     if ( schema.min != null || schema.max != null ) {
         if ( schema.type !== "number" ) {
-            throw new ValidationError( "MIN_MAX_FOR_NUMBERS", "min and max can be used with numbers only" + name );   
+            throw fail( "MIN_MAX_FOR_NUMBERS", "min and max can be used with numbers only" + name );   
         } 
         if ( data < schema.min || data > schema.max ) {
-            return new ValidationError( "MIN_MAX", "Found " + data + ", but expected " + schema.min + "-" + schema.max + name );
+            return fail( "MIN_MAX", "Found " + data + ", but expected " + schema.min + "-" + schema.max + name );
         }       
     }    
    
     // check length 
     if ( schema.length != null && data.length !== schema.length ) {
-        return new ValidationError( "LENGTH", "Found " + data.length + ", but expected " + schema.length + name );
+        return fail( "LENGTH", "Found " + data.length + ", but expected " + schema.length + name );
     }
     
     // minlength and maxlength
     if ( schema.minlength != null || schema.maxlength != null ) {
         // length is an range array           
         if ( data.length < schema.minlength || data.length > schema.maxlength ) {
-            return new ValidationError( "MINLENGTH_MAXLENGTH", "Found " + data.length + ", but expected " + schema.minlength + "-" + schema.maxlength + name );
+            return fail( "MINLENGTH_MAXLENGTH", "Found " + data.length + ", but expected " + schema.minlength + "-" + schema.maxlength + name );
         }        
     }
     
     // check pattern
     if ( schema.pattern && !schema.pattern.test(data) ) {
-        return new ValidationError( "PATTERN", "pattern mismatch" + name );
+        return fail( "PATTERN", "pattern mismatch" + name );
     }  
     
     return true;         

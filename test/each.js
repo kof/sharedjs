@@ -1,10 +1,12 @@
+(function(){
+    
 QUnit.module("each");
 
 function run( data, expectedIterations, type ) {
     test("default context " + type, expectedIterations, function() {
         var obj = {
             test: function( item, i, arr ) {
-                strictEqual( this , exports ? global : window, "callback default context, data is " + type );
+                strictEqual( this , global, "callback default context, data is " + type );
             }
         };
         
@@ -58,3 +60,5 @@ run(undefined, 0, "undefined");
     noop[1] = 2;
     run( noop, 2, "function" )
 }())
+
+}());

@@ -1,6 +1,9 @@
-(function( exports, global, undefined ) { 
+(function( global, undefined ) { 
 
-if ( !exports ) { 
-    global = this; 
-    exports = global.$ = {}; 
+var exports;
+
+if ( typeof module !== "undefined" && module.exports !== undefined ) {
+    exports = module.exports;
+} else {
+    exports = global.$ = {};
 }

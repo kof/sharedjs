@@ -18,11 +18,11 @@ The dream is to be also dependency N1 for all node modules, to avoid that every 
 - intelligent build tool (include only what you need)
 
 ## Installation
-- npm
+npm
 
 	$ npm install sharedjs
 	
-- git
+git
 
 	$ git clone https://github.com/kof/sharedjs.git
 	$ git submodule update --init

@@ -1,3 +1,4 @@
+(function(){
 // variable
 // type validation
 // array
@@ -381,3 +382,4 @@ test("functional assertions", 5, function() {
     
 });
  
+}()); 

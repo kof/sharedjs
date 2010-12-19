@@ -15,7 +15,9 @@ if ( method ) {
 } else {
     tests = [];
     fs.readdirSync( root + "/test" ).forEach( function( test ) {
-        tests.push(  root + "/test/" + test );
+        if ( /\.js/.test(test) ) {
+            tests.push(  root + "/test/" + test );
+        }
     });
 }
 
