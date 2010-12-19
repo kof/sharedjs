@@ -160,7 +160,7 @@ test("custom validation function", 4, function() {
 });
 
 test("silent errors triggering", 1, function() {
-    equal( typeof validate(123, "string", true ), "string", "silent" );
+    equal( typeof validate(123, "string", true ), "object", "silent" );
 });
 
 module("validate objects and arrays");

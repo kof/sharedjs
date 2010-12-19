@@ -75,7 +75,7 @@ validate.creditcard = function( value ) {
 };
 
 /**
- * remove html tags, space chars, numbers and punctuation
+ * Remove html tags, space chars, numbers and punctuation
  * @param {String} value
  * @return {String}
  * @private

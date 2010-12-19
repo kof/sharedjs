@@ -1,16 +1,25 @@
 (function(){
     
-var Error = global.Error,    
-    TypeError = global.TypeError,
-    RegExp = global.RegExp,
+var RegExp = global.RegExp,
     errPrefix = "Schema validation error, ";
+
+function ValidationError( name, message ) {
+    this.name = name;
+    this.message = errPrefix + message;
+}
+exports.inherits(ValidationError, Error);
+
+ValidationError.prototype.toString = function() {
+    return this.name + ": " + this.message;    
+};
+    
 
 /**
  * Validate one variable. 
  * @param {Mixed} data
  * @param {Object|String} schema 
  * @param {String} name current property name
- * @return {Boolean|String}
+ * @return {Boolean|Object}
  * @private
  */
 function validateOne( data, schema, name ) {
@@ -20,12 +29,11 @@ function validateOne( data, schema, name ) {
     if ( schemaType === "string" ) {
         schema = {type: schema};
     } else if ( schemaType !== "object" && schemaType !== "function" ) {
-        throw new TypeError( options.errPrefix + "bad schema" );   
+        throw new ValidationError( "BAD_SCHEMA", "bad schema" + name );   
     }
     
-    
     if ( schemaType === "function" ) {
-        return schema(data) === false ? "custom validation fail " + name : true;
+        return schema(data) === false ? new ValidationError( "CUSTOM_VALIDATION", "custom validation fail" + name ) : true;
     }     
     
     // check type
@@ -33,36 +41,36 @@ function validateOne( data, schema, name ) {
         dataType = exports.type( data );
         // handle simple type string and regexp string e.g. "string|function"
         if ( schema.type !== dataType && !(new RegExp(schema.type)).test(dataType)) {
-            return dataType + " " + name + "is not a " + schema.type;
+            return new ValidationError( "TYPE", "Found " + dataType + ", but expected " + schema.type + name );
         }   
     }
     
-    // it is not null, "", undefined
+    // min and max
     if ( schema.min != null || schema.max != null ) {
         if ( schema.type !== "number" ) {
-            throw new TypeError( options.errPrefix + "min, max and range can be used with numbers only" );   
+            throw new ValidationError( "MIN_MAX_FOR_NUMBERS", "min and max can be used with numbers only" + name );   
         } 
         if ( data < schema.min || data > schema.max ) {
-            return "expected range " + name + "is '" + min + "-" + max + "', but found '" + data + "'";
+            return new ValidationError( "MIN_MAX", "Found " + data + ", but expected " + schema.min + "-" + schema.max + name );
         }       
     }    
    
     // check length 
-    if ( schema.length && data.length !== schema.length ) {
-        return "expected length " + name + "is '" + schema.length + "', but found '" + data.length + "'";
+    if ( schema.length != null && data.length !== schema.length ) {
+        return new ValidationError( "LENGTH", "Found " + data.length + ", but expected " + schema.length + name );
     }
     
-    // it is not null, "", undefined
+    // minlength and maxlength
     if ( schema.minlength != null || schema.maxlength != null ) {
         // length is an range array           
         if ( data.length < schema.minlength || data.length > schema.maxlength ) {
-            return "expected length " + name + "is '" + schema.minlength + "-" + schema.maxlength + ", but found '" + data.length + "'";
+            return new ValidationError( "MINLENGTH_MAXLENGTH", "Found " + data.length + ", but expected " + schema.minlength + "-" + schema.maxlength + name );
         }        
     }
     
     // check pattern
     if ( schema.pattern && !schema.pattern.test(data) ) {
-        return "pattern mismatch " + name;
+        return new ValidationError( "PATTERN", "pattern mismatch" + name );
     }  
     
     return true;         
@@ -85,7 +93,7 @@ function validate( data, schema, silent ) {
     var ret = validateOne( data, schema, "" );
 
     if ( ret !== true && !silent ) {
-        throw new Error( options.errPrefix + " " + ret );
+        throw ret;
     }
     
     // schema contains schema
@@ -105,14 +113,14 @@ function validate( data, schema, silent ) {
                 } 
         
                 
-                ret = validateOne( data[key], schema, "of '" + key + "' " );
+                ret = validateOne( data[key], schema, " (" + key + ")" );
                 
                 if ( ret !== true ) {
                     if ( silent ) {
                         // quit the each loop    
                         return false;
                     } else {
-                        throw new Error( options.errPrefix + " " + ret );
+                        throw ret;
                     }
                 }
                 
@@ -124,7 +132,7 @@ function validate( data, schema, silent ) {
     }
     
     return ret;       
-};
+}
 
 exports.validate = validate;
 

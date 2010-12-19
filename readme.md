@@ -71,3 +71,12 @@ https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bi
 ### $.inherits(constructor, superConstructor);
 
 Inherit the prototype methods from one constructor into another. This concept is used in nodejs "util" module and googles closure library.
+
+### $.validate(data, schema, [silent]);
+
+Validate any type of data. Throws error if data can't pass validation schema.
+
+- `data` can be any data type, f.e. string, number, object, array, arguments
+- `schema` string, array or object containing schema definitions
+- `silent` silent mode switch - no errors will be threw
+
