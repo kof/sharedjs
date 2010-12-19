@@ -41,7 +41,8 @@ Quit the loop using "return false;" inside of callback.
 - `context` - object optional
 
 
-#### Similar ecma 5 concepts are:
+Similar ecma 5 concepts are:
+
 - Array.prototype.forEach https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/forEach
 - Array.prototype.some https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/some
 - Array.prototype.every https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/every
@@ -57,6 +58,9 @@ Merge the contents of two or more objects together into the first object.
 
 
 	var object = $.extend({}, object1, object2);
+
+Inspierd by jQuery
+http://api.jquery.com/jQuery.extend/
 	
 ### $.bind(block, [context], [arg1], [arg2], [argN]);
 

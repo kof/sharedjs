@@ -10,24 +10,26 @@
 // default
 // reccursive
 // regexp
-// range
+// min
+// max
 // length
+// minlength
+// maxlength
 // custom using function
-// built in regexp
 // sort
 
 module = QUnit.module;
 
-test("validate - common", 1, function() {
+test("common", 1, function() {
     raises(function() {
         validate(123);    
     }, "bad schema");
 });
 
 
-module("variables");
+module("validate variables");
 
-test("validate - type", 4, function() {
+test("type", 4, function() {
     ok( validate(123, "number"), "simple" );
     raises(function() {
         validate("123", "number");    
@@ -41,68 +43,83 @@ test("validate - type", 4, function() {
 
 });
 
-test("validate - range", 3, function() {
-    raises(function() {
+test("min", 3, function() {
+    ok(validate(5, {
+        type: "number",
+        min: 3
+    }), "correct min 1"); 
+    
+    ok(validate(5, {
+        type: "number",
+        min: 5
+    }), "correct min 2");     
+    
+    raises(function(){
+        validate(5, {
+            type: "number",
+            min: 6
+        });
+    }, "incorrect min");       
+});
+
+test("max", 3, function() {
+    ok(validate(5, {
+        type: "number",
+        max: 6
+    }), "correct max 1"); 
+    
+    ok(validate(5, {
+        type: "number",
+        max: 5
+    }), "correct max 2");     
+    
+    raises(function(){
+        validate(5, {
+            type: "number",
+            max: 4
+        });
+    }, "incorrect max");       
+});
+
+
+test("minlength", 6, function() {
+    ok(validate( "123", {
+        type: "string",
+        minlength: 2
+    }), "data is string 1");
+    
+    ok(validate( "123", {
+        type: "string",
+        minlength: 3
+    }), "data is string 2"); 
+    
+    raises(function(){
         validate("123", {
             type: "string",
-            range: [1,5]
+            minlength: 4
         });
-    }, "use range only with numbers");
+    }, "data is string - negative");  
     
-    ok(validate( 123, {
-        type: "number",
-        range: [100, 123]
-    }), "number with range in schema");  
-    
-    raises(function(){
-        validate( 124, {
-            type: "number",
-            range: [100, 123]
-        });
-    }, "negative test number with schema and range");
-});
-
-test("validate - length", 6, function() {
-    ok(validate( "123", {
-        type: "string",
-        length: 3
-    }), "number");    
-
-    raises(function(){
-        validate( "1234", {
-            type: "string",
-            length: 3
-        });
-    },"negative number");    
-    
-
-    ok(validate( "123", {
-        type: "string",
-        length: [2,5]
-    }), "range");    
-    
-    raises(function(){
-        validate( "123456", {
-            type: "string",
-            length: [2,5]
-        });
-    }, "negative range");    
-    
-    ok(validate( [1,2], {
+    ok(validate( [1,2,3], {
         type: "array",
-        length: 2
-    }), "array length number");
+        minlength: 2
+    }), "data is array 1");
+    
+    ok(validate( [1,2,3], {
+        type: "array",
+        minlength: 3
+    }), "data is array 2"); 
     
     raises(function(){
-        validate([1,2], {
+        validate([1,2,3], {
             type: "array",
-            length: 3
+            minlength: 4
         });
-    }, "array with length negative");    
-    
+    }, "data is array - negative");           
 });
 
-test("validate - pattern", 2, function() {
+
+test("pattern", 2, function() {
 
 
     ok(validate( "123", {
@@ -119,7 +136,7 @@ test("validate - pattern", 2, function() {
        
 });
 
-test("validate - custom validation function", 4, function() {
+test("custom validation function", 4, function() {
     ok(validate(123, function( data ) {
         if ( data === 123 ) {
             return true;
@@ -142,14 +159,14 @@ test("validate - custom validation function", 4, function() {
     
 });
 
-test("validate - silent errors triggering", 1, function() {
+test("silent errors triggering", 1, function() {
     equal( typeof validate(123, "string", true ), "string", "silent" );
 });
 
-module("objects and arrays");
+module("validate objects and arrays");
 
 
-test("validate - array", 2, function() {
+test("array", 2, function() {
 
     ok(validate([1,2], {
         type: "array",
@@ -166,7 +183,7 @@ test("validate - array", 2, function() {
 });
 
 
-test("validate - arguments simple", 2, function() {
+test("arguments simple", 2, function() {
 
     function fui( path, callback ) {
         return validate(arguments, {
@@ -183,7 +200,7 @@ test("validate - arguments simple", 2, function() {
 });
 
 
-test("validate - arguments with optional data types", 2, function() {
+test("arguments with optional data types", 2, function() {
 
     function fui( path, callback ) {
         return validate(arguments, {
@@ -201,7 +218,7 @@ test("validate - arguments with optional data types", 2, function() {
 
 
 
-test("validate - arguments with optional schema param", 3, function() {
+test("arguments with optional schema param", 3, function() {
 
     function fui( path, callback ) {
         return validate(arguments, {
@@ -238,7 +255,7 @@ test("validate - arguments with optional schema param", 3, function() {
         
 });
 
-test("validate - functional assertions", 5, function() {
+test("functional assertions", 5, function() {
     var schema = { 
         type: "object",
         schema: {
@@ -249,11 +266,13 @@ test("validate - functional assertions", 5, function() {
                 },
                 age: {
                     type: "number",
-                    range: [23, 27]
+                    min: 23,
+                    max: 27
                 },
                 sex: {
                     type: "string",
-                    length: [4, 6],
+                    minlength: 4,
+                    maxlength: 6,
                     optional: true
                 },
                 brother: {
@@ -266,7 +285,8 @@ test("validate - functional assertions", 5, function() {
                         },
                         age: {
                             type: "number",
-                            range: [23, 30]
+                            min: 23,
+                            max: 30
                         }                                                    
                     }
                 }        
