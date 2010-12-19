@@ -1,1 +1,1 @@
-module.exports = require( "./lib/shared" );
+module.exports = require( "./lib/sharedjs" );

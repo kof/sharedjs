@@ -12,7 +12,7 @@ var intro = fs.readFileSync( root + "/src/intro.js" ) + "\n",
 
 var custom = args["-c"];
 
-var name = "shared"; 
+var name = "sharedjs"; 
 
 if ( custom ) {
     name = args["-n"] || "custom";

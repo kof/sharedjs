@@ -20,6 +20,6 @@ if ( method ) {
 }
 
 testrunner.run({
-    code: root + "/lib/shared.js",
+    code: root + "/lib/sharedjs.js",
     tests: tests 
 });
