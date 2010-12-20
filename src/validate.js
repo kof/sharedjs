@@ -27,17 +27,14 @@ function fail( name, message ) {
  */
 function validateOne( data, schema, name ) {
     var schemaType = exports.type( schema ),
-        dataType;
+        dataType,
+        ret;
     
     if ( schemaType === "string" ) {
         schema = {type: schema};
     } else if ( schemaType !== "object" && schemaType !== "function" ) {
         throw fail( "BAD_SCHEMA", "bad schema" + name );   
     }
-    
-    if ( schemaType === "function" ) {
-        return schema(data) === false ? fail( "CUSTOM_VALIDATION", "custom validation fail" + name ) : true;
-    }     
     
     // check type
     if ( schema.type ) {
@@ -47,11 +44,27 @@ function validateOne( data, schema, name ) {
             return fail( "TYPE", "Found " + dataType + ", but expected " + schema.type + name );
         }   
     }
-    
+
+    if ( schemaType === "function" || schema.custom ) {
+        if ( schemaType === "function" ) {
+            ret = schema(data);
+        } else if ( typeof schema.custom === "string" ) {
+            ret = validate[schema.custom](data);
+        // schema.custom schould be a function
+        } else {
+            ret = schema.custom(data);
+        }
+        
+        if ( ret === false ) {
+            ret = fail( "CUSTOM_DEFAULT", "custom validation failed" + name );
+        }
+        return ret;
+    }
+        
     // min and max
     if ( schema.min != null || schema.max != null ) {
         if ( schema.type !== "number" ) {
-            throw fail( "MIN_MAX_FOR_NUMBERS", "min and max can be used with numbers only" + name );   
+            throw fail( "MIN_MAX_FOR_NUMBERS_ONLY", "min and max can be used with numbers only" + name );   
         } 
         if ( data < schema.min || data > schema.max ) {
             return fail( "MIN_MAX", "Found " + data + ", but expected " + schema.min + "-" + schema.max + name );
@@ -74,7 +87,7 @@ function validateOne( data, schema, name ) {
     // check pattern
     if ( schema.pattern && !schema.pattern.test(data) ) {
         return fail( "PATTERN", "pattern mismatch" + name );
-    }  
+    }
     
     return true;         
 }
@@ -138,5 +151,7 @@ function validate( data, schema, silent ) {
 }
 
 exports.validate = validate;
+
+validate.fail = fail;
 
 }());

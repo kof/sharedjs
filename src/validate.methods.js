@@ -39,12 +39,12 @@ o = validate.options = {
 // generate validation functions using regexp
 exports.each(o.regexp, function( regexp, name ) {
     validate[name] = function( value ) {
-        return regexp.test( value );        
+        return regexp.test( value ) || validate.fail( "CUSTOM_" + name.toUpperCase(), "wrong " + name );        
     };
 });
 
 validate.date = function( value ) {
-    return !o.regexpSpecial.date.test( new Date(value) );        
+    return !o.regexpSpecial.date.test( new Date(value) ) || validate.fail( "CUSTOM_DATE", "wrong date" );        
 };
 
 validate.creditcard = function( value ) {
@@ -71,7 +71,7 @@ validate.creditcard = function( value ) {
         bEven = !bEven;
     }
     
-    return (nCheck % 10) == 0;    
+    return (nCheck % 10) == 0 || validate.fail( "CUSTOM_CREDITCARD", "wrong creditcard data" );    
 };
 
 /**
@@ -88,16 +88,16 @@ function stripHtml(value) {
 }
 
 validate.maxWords = function( value, max ) {
-    return stripHtml(value).match(o.regexpSpecial.words).length < max;    
+    return stripHtml(value).match(o.regexpSpecial.words).length < max || validate.fail( "CUSTOM_MAX_WORDS", "too much words" );    
 };
 
 validate.minWords = function( value, min ) {
-    return stripHtml(value).match(o.regexpSpecial.words).length >= min;    
+    return stripHtml(value).match(o.regexpSpecial.words).length >= min || validate.fail( "CUSTOM_MIN_WORDS", "too few words" );    
 };
 
 validate.rangeWords = function( value, range ) {
     var count = stripHtml(value).match(o.regexpSpecial.words).length;
-    return count < range[0] || count > range[1] ? false : true;
+    return count >= range[0] || count <= range[1] || validate.fail( "CUSTOM_MIN_WORDS", "words count range" );
 };
 
 }());

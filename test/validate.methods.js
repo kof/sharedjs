@@ -7,7 +7,7 @@ module = QUnit.module;
 	
 function methodTest( methodName ) {
 	return function(value, param) {
-        return validate[methodName](value, param);
+        return validate[methodName](value, param) === true ? true : false;
 	};
 }
 

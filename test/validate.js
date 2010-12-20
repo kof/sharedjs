@@ -137,7 +137,7 @@ test("pattern", 2, function() {
        
 });
 
-test("custom validation function", 4, function() {
+test("custom validation methods", 7, function() {
     ok(validate(123, function( data ) {
         if ( data === 123 ) {
             return true;
@@ -152,12 +152,21 @@ test("custom validation function", 4, function() {
         });
     }, "schema is validation function - negative test");    
     
-    ok( validate("oleg008@gmail.com", validate.email), "validate email using method" ); 
+    ok( validate("oleg008@gmail.com", validate.email), "validate email using method directly" ); 
     
     raises(function(){
         validate("oleg008gmail.com", validate.email);
-    }, "validate email using method, negative test");      
+    }, "validate email using method directly, negative test");
     
+    ok( validate("oleg008@gmail.com", {custom: "email"} ), "validate email using method name" );   
+    
+    raises(function(){
+        validate("oleg008gmail.com", {custom: "email"});
+    }, "validate email using method name, negative test");       
+
+    
+    var err = validate("oleg008gmail.com", {custom: "email"}, true );
+    equal( err.name, "CUSTOM_EMAIL", "error name is correct" );
 });
 
 test("silent errors triggering", 1, function() {
