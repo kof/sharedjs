@@ -4,22 +4,34 @@
  * @param {Object}  obj
  * @return {Object}
  */
-exports.extend = function extend( deep /*, obj1, obj2, obj3 */ ) {
-    // take first argument, if its not a boolean
-    var args = arguments,
-        i = deep === true ? 1 : 0,
-        key,
-        target = args[i];
+exports.extend = (function(){
     
-    for ( ; i < args.length; ++i ) {
-        exports.each( args[i], function( val, key, obj ) {
-            if ( deep === true && target[key] ) {
-                extend( deep, target[key], obj[key] );    
-            } else {
-                target[key] = obj[key];
-            }            
-        });
-    }  
-          
-    return target;    
-};
+    var toString = Object.prototype.toString,
+        obj = '[object Object]';
+
+    return function extend( deep /*, obj1, obj2, obj3 */ ) {
+        // take first argument, if its not a boolean
+        var args = arguments,
+            i = deep === true ? 1 : 0,
+            key,
+            target = args[i];
+        
+        for ( ; i < args.length; ++i ) {
+            for (key in args[i]) {
+                if ( deep === true && 
+                     target[key] && 
+                     // if not doing this check you may end in
+                     // endless loop if using deep option
+                     toString.call(args[i][key]) === obj &&
+                     toString.call(target[key]) === obj ) {
+                         
+                    extend( deep, target[key], args[i][key] );    
+                } else {
+                    target[key] = args[i][key];
+                }            
+            }
+        }  
+              
+        return target;    
+    };
+}());
