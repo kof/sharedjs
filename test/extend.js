@@ -1,8 +1,9 @@
 QUnit.module("extend");
 
-test("plain objects", 2, function() {
+test("plain objects", 3, function() {
     deepEqual(  extend({test1: 1}, {test2: 2}), {test1: 1, test2: 2}, "extend 2 simple objects" );
     deepEqual(  extend({test1: 1}, {test2: 2}, {test3: 3}), {test1: 1, test2: 2, test3: 3}, "extend 3 simple objects" );
+    deepEqual(  extend({test1: 1}, true), {test1: 1}, "2 arg is not an object" );
 });
 
 test("instance into plain object", 1, function() {
