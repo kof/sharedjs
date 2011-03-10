@@ -1,23 +1,22 @@
 {
     "name": "sharedjs",
     "description": "The most needed utility functions for writing shared code between browser and client.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "repository": "git://github.com/kof/sharedjs.git",
     "keywords": [
-        "validate", "validation", "utils", "shared", "crossplatform" 
+        "validate", "validation", "utils", "shared", "crossplatform", "extend",
+        "inherits", "noop", "toArray", "typeof", "each", "bind" 
     ],
     "author": "Oleg Slobodskoi <oleg008@gmail.com>",
-    "main": "index",
-    "directories": {
-        "lib": "lib"
-    },
     "engines": {
         "node": ">= 0.3.0"
     },
     "dependencies": {
         "argsparser": ">= 0.0.3",
-        "qunit": ">= 0.1.3",
         "uglify-js": ">= 0.0.1"
+    },
+    "devDependencies": {
+        "qunit": ">= 0.1.5",
     },    
     "licenses": [
         { 

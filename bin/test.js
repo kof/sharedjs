@@ -2,7 +2,7 @@
 
 var fs = require( "fs" ),
     path = require( "path" ),
-    testrunner = require( "qunit" ),
+    qunit = require( "qunit" ),
     root = path.normalize( __dirname + "/.." ),
     method = process.argv[2],
     tests; 
@@ -20,8 +20,8 @@ if ( method ) {
         }
     });
 }
-
-testrunner.run({
+qunit.options.coverage = false;
+qunit.run({
     code: root + "/lib/sharedjs.js",
     tests: tests 
 });

@@ -16,7 +16,7 @@ exports.extend = (function(){
             key,
             target = args[i];
         
-        for ( ; i < args.length; ++i ) {
+        for ( ++i; i < args.length; ++i ) {
             for (key in args[i]) {
                 if ( deep === true && 
                      target[key] && 
