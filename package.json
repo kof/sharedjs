@@ -15,8 +15,9 @@
         "argsparser": ">= 0.0.3",
         "uglify-js": ">= 0.0.1"
     },
+    "bin": {},
     "devDependencies": {
-        "qunit": ">= 0.1.5",
+        "qunit": ">= 0.1.5"
     },    
     "licenses": [
         { 
